@@ -40,7 +40,7 @@ object TestObject {
     val v = 1.to(10).map(_*10);
     println(v);
 
-    val o = fac(10);
+    val o = test(10);
     println(o);
 
     //输入和输出
@@ -62,11 +62,59 @@ object TestObject {
     println(for(c <- "Hello";i<- 0 to 1) yield (c+i).toChar);
     println(for(i<- 0 to 1;c <- "Hello") yield (c+i).toChar);
 
+    //递归调用
+    println(fac(10))
+
+    //默认参数和带名参数
+    println(decorate("12323"))
+
+    //变长参数
+    println(sum1(1,4,9,16,25))
+    println(sum1(1 to 5 : _*))
+
+    //调用过程
+    box("hello scala")
+
+    //在words被定义时即被赋值
+    val words1 = scala.io.Source.fromFile("D:\\Develop Workspaces\\MyFirstProject\\pom.xml").mkString
+    //懒值 在words被首次调用时被取值
+    lazy val words2 = scala.io.Source.fromFile("D:\\Develop Workspaces\\MyFirstProject\\pom.xml").mkString
+    //在每一次words被调用时取值
+    def words3 = scala.io.Source.fromFile("D:\\Develop Workspaces\\MyFirstProject\\pom.xml").mkString
+
+    println(words1)
+    println(words2)
+    println(words3)
   }
 
-  def fac(n:Int) ={
+  //定义递归函数1
+  def test(n:Int) ={
     var r = 1;
      for(i <- 1 to n)  r= r*i;
     r;
+  }
+
+  //定义递归函数2
+  def fac(n:Int) :Int ={
+    if(n <= 0) 1;
+    else n* fac(n-1);
+  }
+
+  //默认参数和带名参数
+  def decorate(str:String,left:String="[",right:String = "]"): String ={
+    left + str +right ;
+  }
+
+  //变长参数
+  def sum1(args:Int *): Int ={
+    var result = 0;
+    for(arg <- args) result += arg
+    result;
+  }
+
+  //过程
+  def box(s:String):Unit ={
+    var border = "-"+s.length +"--\n";
+    println(border + "|"+s+"|\n"+border);
   }
 }
